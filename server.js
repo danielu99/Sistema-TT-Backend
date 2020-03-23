@@ -425,4 +425,21 @@ app.post("/UnirseProtocolo", (req, res) => {
     })
 })
 
+app.post("/AlumnoProtocolo", (req, res) => {
+    let Alumno = req.body
+
+    var sql = "select numeroTT from alumnos where boleta='" + Alumno.boleta + "'"
+
+    mysqlConnection.query(sql, (err, results) => {
+        if (err) {
+            throw res.send(err)
+        }
+        else {
+            return res.json({
+                data: results
+            })
+        }
+    })
+})
+
 app.listen(4000)
