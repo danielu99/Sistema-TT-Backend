@@ -460,6 +460,52 @@ app.post("/AgregaPalabrasClave",(req,res)=>{
     })
 })
 
+app.post("/PalabrasClave",(req,res)=>{
+    let conjunto=req.body
+
+    var sql="select palabrasclave Palabra from Protocolo_palabrasClave where numeroTT='"+conjunto.protocolo+"'"
+    mysqlConnection.query(sql,(err,results)=>{
+        if(err){
+            throw res.send(err)
+        }
+        else{
+            if(results.length>0){
+                return res.json({
+                    data:results
+                })
+            }
+            else{
+                return res.json({
+                    data:0
+                })
+            }
+        }
+    })
+})
+
+app.post("/ObtenLink",(req,res)=>{
+    let conjunto=req.body
+
+    var sql="select DocumentoPDF from protocolo where numeroTT='"+conjunto.protocolo+"'"
+    mysqlConnection.query(sql,(err,results)=>{
+        if(err){
+            throw res.send(err)
+        }
+        else{
+            if(results.length>0){
+                return res.json({
+                    data:results
+                })
+            }
+            else{
+                return res.json({
+                    data:0
+                })
+            }
+        }
+    })
+})
+
 app.post("/ActualizaLink",(req,res)=>{
     let conjunto=req.body
 
