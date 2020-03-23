@@ -442,4 +442,58 @@ app.post("/AlumnoProtocolo", (req, res) => {
     })
 })
 
+app.post("/AgregaPalabrasClave",(req,res)=>{
+    let conjunto=req.body
+
+    var sql="insert into protocolo_palabrasclave(palabrasClave,numeroTT) values('"+conjunto.palabra+"','"+conjunto.protocolo+"')"
+    mysqlConnection.query(sql,(err)=>{
+        if(err){
+            return res.json({
+                data:0
+            })
+        }
+        else{
+            return res.json({
+                data:1
+            })
+        }
+    })
+})
+
+app.post("/ActualizaLink",(req,res)=>{
+    let conjunto=req.body
+
+    var sql="update protocolo set DocumentoPDF='"+conjunto.link+"' where numeroTT='"+conjunto.protocolo+"'"
+    mysqlConnection.query(sql,(err)=>{
+        if(err){
+            return res.json({
+                data:0
+            })
+        }
+        else{
+            return res.json({
+                data:1
+            })
+        }
+    })
+})
+
+app.post("/FinalizaEvaluacion",(req,res)=>{
+    let conjunto=req.body
+
+    var sql="update evalúa set estatus='Pendiente' where numeroTT='"+conjunto.protocolo+"' and not estatus='Aprobado'"
+    mysqlConnection.query(sql,(err)=>{
+        if(err){
+            return res.json({
+                data:0
+            })
+        }
+        else{
+            return res.json({
+                data:1
+            })
+        }
+    })
+})
+
 app.listen(4000)
